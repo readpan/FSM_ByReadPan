@@ -4,7 +4,7 @@
     /// 获取这个状态机的状态
     /// </summary>
     /// <returns></returns>
-    uint GetStateID();
+    StateType GetStateID();
     /// <summary>
     /// 进入状态
     /// </summary>

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class StateMachine
 {
 
-    public Dictionary<uint, IState> mStateDic = null;
+    public Dictionary<StateType, IState> mStateDic = null;
     private IState mCurrentState = null;
     public IState CurrentState
     {
@@ -13,7 +13,7 @@ public class StateMachine
             return mCurrentState;
         }
     }
-    public uint CurrentID
+    public StateType CurrentID
     {
         get
         {
@@ -22,8 +22,7 @@ public class StateMachine
     }
     public StateMachine()
     {
-        mStateDic = new Dictionary<uint, IState>();
-
+        mStateDic = new Dictionary<StateType, IState>();
     }
 
     /// <summary>
@@ -52,7 +51,7 @@ public class StateMachine
     /// </summary>
     /// <param name="stateID">状态ID</param>
     /// <returns>是否移除成功</returns>
-    public bool RemoveState(uint stateID)
+    public bool RemoveState(StateType stateID)
     {
         if (mCurrentState != null)
         {
@@ -74,7 +73,7 @@ public class StateMachine
     /// </summary>
     /// <param name="stateID">状态id</param>
     /// <returns>状态</returns>
-    public IState GetState(uint stateID)
+    public IState GetState(StateType stateID)
     {
         IState state = null;
         mStateDic.TryGetValue(stateID, out state);
@@ -102,7 +101,7 @@ public class StateMachine
     /// <param name="param1"></param>
     /// <param name="param2"></param>
     /// <returns>是否切换成功</returns>
-    public bool SwitchState(uint stateID, object param1, object param2)
+    public bool SwitchState(StateType stateID, object param1, object param2)
     {
         IState newState = null;
         IState oldState = mCurrentState;
@@ -145,20 +144,20 @@ public class StateMachine
     /// </summary>
     /// <param name="stateID">此状态</param>
     /// <returns></returns>
-    public bool IsInState(uint stateID)
+    public bool IsInState(StateType stateID)
     {
         return mCurrentState == null ? false : mCurrentState.GetStateID() == stateID;
     }
 
-    void OnUpdate()
+    public void OnUpdate()
     {
-        if(mCurrentState !=null)
+        if (mCurrentState != null)
         {
             mCurrentState.OnUpdate();
         }
     }
 
-    void OnFixedUpdate()
+    public void OnFixedUpdate()
     {
         if (mCurrentState != null)
         {
@@ -166,7 +165,7 @@ public class StateMachine
         }
     }
 
-    void OnLateUpdate()
+    public void OnLateUpdate()
     {
         if (mCurrentState != null)
         {
